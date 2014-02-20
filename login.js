@@ -5,7 +5,7 @@
 function Login() {
 	// sessionId -> user map
 	this.sessionMap = {
-		99999 : { name: 'Foo', email: 'foo@bar.com' }
+		123456 : { name: 'dhananjay', email: 'dhananjayapte@gmail.com' }
 	};
 }
 /**
@@ -44,8 +44,23 @@ Login.prototype.logout = function(sessionId) {
 	console.log('logout::' + sessionId);
    /*
 	* TODO: Remove the given sessionId from the sessionMap
-	*/
+	*/ 
+	delete this.sessionMap['sessionId'];
 };
+
+/**
+Refresh Session
+*/
+Login.prototype.refreshSession = function(sessionId){
+	var name = this.sessionMap[sessionId].name;
+	var email = this.sessionMap[sessionId].email;
+	//create new session
+    var newSessionId = this.login(name,email);
+    //delete the old session
+    this.logout(sessionId);
+    console.log('Session Refreshed');
+	return newSessionId;
+}
 
 // Export the Login class
 module.exports = new Login();
